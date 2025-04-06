@@ -1,4 +1,4 @@
-# CachedLatestArticles
+# Cached Latest Articles
 
 CachedLatestArticles – WordPress Plugin
 
