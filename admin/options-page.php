@@ -1,4 +1,7 @@
 <?php
+
+require_once plugin_dir_path(__FILE__) . '../inc/CLA_Cache_Garbage_Collector.php';
+
 function CLA_options_page() {
     add_menu_page(
         'Cached Latest Articles',
@@ -20,7 +23,6 @@ function CLA_render_options_page() {
     if (isset($_POST['submit']) && isset($_POST['cla_options_is_active'])) {
         foreach($_POST['cla_options_is_active'] as $index=>$cla_option_is_active){
             $cla_options_id = $_POST['cla_options_id'][$index];
-            $cla_options_cron = $_POST['cla_options_cron'][$index];
             $cla_options_refresh_on_publish = $_POST['cla_options_refresh_on_publish'][$index];
             $cla_options_refresh_on_update = $_POST['cla_options_refresh_on_update'][$index];
             $cla_options_refresh_on_delete = $_POST['cla_options_refresh_on_delete'][$index];
@@ -31,7 +33,6 @@ function CLA_render_options_page() {
             $options[] = [
                 'is_active' => $cla_option_is_active,
                 'id' => $cla_options_id,
-                'cron_interval' => $cla_options_cron,
                 'refresh_on_publish' => $cla_options_refresh_on_publish,
                 'refresh_on_update' => $cla_options_refresh_on_update,
                 'refresh_on_delete' => $cla_options_refresh_on_delete,
@@ -44,7 +45,26 @@ function CLA_render_options_page() {
         }
 
         update_option('cla_options', $options);
-        echo '<p class="save_changes_nodice">Changes Saved</p>';
+        $options = !empty(get_option('cla_options')) ? get_option('cla_options') : [];
+        
+        $garbage_collector = new CLA_Cache_Garbage_Collector(CLA_PLUGIN_DIR . 'cache/', new CLA_File_Handler());
+        $garbage_collector->clear_unused_cache_files($options);
+
+        foreach($options as $option){
+
+            $CLA_Posts = new CLA_Posts((int)$option['number_of_posts']);
+
+            $CLA_Cache_Handler = new CLA_Cache_Handler(
+                $option['id'],
+                $CLA_Posts,
+                new CLA_File_Handler(),
+                CLA_PLUGIN_DIR . 'cache/'
+            );
+
+            $CLA_Cache_Handler->refresh_cache();
+        }
+
+        echo '<p class="save_changes_nodice">Changes Saved, cache renewed</p>';
     }
 
     $options = get_option('cla_options');
@@ -107,12 +127,6 @@ function settingsGroupItem($options, $index = 0) {
                 <label class="settingsGroup__input-regular">
                     <span>ID</span>
                     <input readonly   class="indexinput" type="number" name="cla_options_id[]" value="<?=!empty($options["id"]) ? $options['id'] : '1'?>" />
-                </label>
-            </div>
-            <div class="settingsGroup__item">
-                <label class="settingsGroup__input-regular">
-                    <span>Refresh every (in min. '0' for no refresh)</span>
-                    <input type="number" name="cla_options_cron[]" value="<?=!empty($options["cron_interval"]) ? $options['cron_interval'] : '0'?>" />
                 </label>
             </div>
             <div class="settingsGroup__item">

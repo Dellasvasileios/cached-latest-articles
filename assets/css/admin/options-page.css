@@ -117,13 +117,13 @@
 }
 
 .save_changes_nodice{
-    display: flex;
+    display: block;
     align-items: center;
     color:white;
     background-color: rgb(43, 194, 101);
     display: inline-block;
     padding: 4px 10px;
     border-radius: 4px;
-    min-width: 360px;
+    max-width: 400px;
     margin-bottom: 0;
 }

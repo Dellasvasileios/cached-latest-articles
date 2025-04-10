@@ -10,7 +10,11 @@
     exit; // Exit if accessed directly
 }
 
+define('CLA_PLUGIN_DIR', plugin_dir_path(__FILE__));
+
 require_once plugin_dir_path(__FILE__) . 'admin/options-page.php';
+require_once plugin_dir_path(__FILE__) . 'inc/CLA_Cache_Handler.php';
+require_once plugin_dir_path(__FILE__) . 'inc/CLA_Event_Handler.php';
 
 function CLA_enqueue_admin_scripts(){
 
@@ -23,3 +27,35 @@ function CLA_enqueue_admin_scripts(){
 }
 
 add_action('admin_enqueue_scripts', 'CLA_enqueue_admin_scripts');
+
+
+function CLA_init_caching(){
+    
+    $shortcode_caching_options = get_option('cla_options');
+
+    foreach($shortcode_caching_options as $index => $option){
+        
+        $CLA_Posts = new CLA_Posts((int)$option['number_of_posts']);
+
+        $CLA_Cache_Handler = new CLA_Cache_Handler(
+            $option['id'],
+            $CLA_Posts,
+            new CLA_File_Handler(),
+            CLA_PLUGIN_DIR . 'cache/'
+        );
+
+        $CLA_Event_Hnadler = new CLA_Event_Handler(
+            $CLA_Cache_Handler,
+            $CLA_Posts,
+            $option['refresh_on_publish'],
+            $option['refresh_on_update'],
+            $option['refresh_on_delete'],
+            $option['is_active']
+        ); 
+        
+    }
+    
+
+}
+
+add_action('init', 'CLA_init_caching');
