@@ -15,14 +15,11 @@ Designed to minimize load times and reduce unnecessary database calls, this plug
 ⚙️ Shortcode Integration: Easily insert the latest articles.
 
 🕒 Configurable Cache Duration
-Set how frequently the cached articles should refresh (e.g., every 15 minutes, hourly, daily) with  WP-Cron events. This helps balance performance with content freshness.
 
 🔄 Automatic Cache Invalidation configuration
 
 The cache is automatically cleared when:
 
-A new article is created (published or scheduled)
+A new article is created updated or deleted(published or scheduled)
 
-An existing article is updated from the latest articles 
-
-🧹 Manual Cache Clear
+🧹 Manual Cache renew
