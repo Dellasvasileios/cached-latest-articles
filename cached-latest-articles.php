@@ -15,6 +15,7 @@ define('CLA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 require_once plugin_dir_path(__FILE__) . 'admin/options-page.php';
 require_once plugin_dir_path(__FILE__) . 'inc/CLA_Cache_Handler.php';
 require_once plugin_dir_path(__FILE__) . 'inc/CLA_Event_Handler.php';
+require_once plugin_dir_path(__FILE__) . 'admin/shortcodes/shorcode_cached_latest_articles.php';
 
 function CLA_enqueue_admin_scripts(){
 

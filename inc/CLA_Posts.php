@@ -22,11 +22,14 @@ class CLA_Posts{
 
         $query = new WP_Query($args);
 
-        if($query->have_posts()){
+        if ($query->have_posts()) {
+            foreach ($query->posts as &$post) {
+                $post->permalink = get_permalink($post->ID);
+                $post->image_url = get_the_post_thumbnail_url($post->ID, 'full');
+            }
             return $query->posts;
-        }else{
-            return false;
         }
+        return false;
     }
 
     function get_post_type($postID){

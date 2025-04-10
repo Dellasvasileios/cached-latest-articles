@@ -14,33 +14,32 @@ class CLA_Cache_Garbage_Collector{
         
         function clear_unused_cache_files($options){
             
-            if($options == null || empty($options)){
-                return;
-            }
+                if($options == null || empty($options)){
+                        return false;
+                }
 
-            $cache_files_names = $this->CLA_FileManager->get_all_file_names_on_dir($this->cache_dir);
+                $cache_files_names = $this->CLA_FileManager->get_all_file_names_on_dir($this->cache_dir);
 
-            if (empty($cache_files_names)){
-                return;
-            }
+                if (empty($cache_files_names)){
+                        return false;
+                }
 
-            
+                foreach($cache_files_names as $cache_file_name){
 
-            foreach($cache_files_names as $cache_file_name){
-                $file_exists = false;
-                foreach($options as $option){
-                     
-                        if(strpos($cache_file_name, $option["id"])){   
-                                $file_exists = true;
-                                break;
+                        $file_exists = false;
+                        foreach($options as $option){
+                                
+                                if(strpos($cache_file_name, $option["id"])){   
+                                        $file_exists = true;
+                                        break;
+                                }
+
                         }
-                }
 
-                if(!$file_exists){
-                        $this->CLA_FileManager->delete_file($this->cache_dir . $cache_file_name);
-                }
+                        if(!$file_exists){
+                                $this->CLA_FileManager->delete_file($this->cache_dir . $cache_file_name);
+                        }
                 
-
-            }
+                }
         }
 }
