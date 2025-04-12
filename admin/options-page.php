@@ -188,12 +188,12 @@ function settingsGroupItem($options, $index = 0) {
 
             
             <code>
-                [cached_latest_articles  id="<?=$options['id']?>" view="<?=$options['view_type']?>" number_of_posts="<?=$options['number_of_posts']?>" ajax="<?=$options['ajax']?>"]
+                [cached_latest_articles is_active="<?=$options['is_active']?>"  id="<?=$options['id']?>" view="<?=$options['view_type']?>" number_of_posts="<?=$options['number_of_posts']?>" ajax="<?=$options['ajax']?>"]
             </code>
 
         </div>
     <?php
 
-    return  $output = ob_get_clean();
+    return ob_get_clean();
 
 }

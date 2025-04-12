@@ -30,6 +30,16 @@ function CLA_enqueue_admin_scripts(){
 add_action('admin_enqueue_scripts', 'CLA_enqueue_admin_scripts');
 
 
+function CLA_enqueue_front_end_scripts(){
+    wp_enqueue_script("cla-frontend-js", plugin_dir_url(__FILE__) . 'assets/js/ajaxFetchCache.js', [], '1.0.0', true);
+
+    wp_localize_script('cla-frontend-js', 'cla_ajax_object', array(
+        'domain' => get_option('home'),
+    ));
+}
+
+add_action('wp_enqueue_scripts', 'CLA_enqueue_front_end_scripts');
+
 function CLA_init_caching(){
     
     $shortcode_caching_options = get_option('cla_options');
@@ -56,7 +66,38 @@ function CLA_init_caching(){
         
     }
     
-
 }
 
 add_action('init', 'CLA_init_caching');
+
+add_action('rest_api_init', function () {
+    register_rest_route('cla/v1', '/shortcode/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'cla_fetch_shortcode_data',
+        'permission_callback' => '__return_true', 
+    ));
+});
+
+function cla_fetch_shortcode_data($data) {
+    $id = $data['id'];
+
+    $cache = file_get_contents(CLA_PLUGIN_DIR . 'cache/articles-cache' . $id . '.json');
+    $response = [];
+    if ($cache === false) {
+
+        $response = array(
+            'id' => $id,
+            'content' => json_decode("[]" , true),
+        );
+
+        return rest_ensure_response($response);
+    }
+
+    $response = array(
+        'id' => $id,
+        'content' => json_decode($cache , true),
+    );
+
+    return rest_ensure_response($response);
+
+}
