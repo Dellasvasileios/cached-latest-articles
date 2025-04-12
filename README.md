@@ -14,8 +14,6 @@ Designed to minimize load times and reduce unnecessary database calls, this plug
 
 ⚙️ Shortcode Integration: Easily insert the latest articles.
 
-🕒 Configurable Cache Duration
-
 🔄 Automatic Cache Invalidation configuration
 
 The cache is automatically cleared when:
