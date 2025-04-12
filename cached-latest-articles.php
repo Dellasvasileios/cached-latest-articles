@@ -81,10 +81,11 @@ add_action('rest_api_init', function () {
 function cla_fetch_shortcode_data($data) {
     $id = $data['id'];
 
-    $cache = file_get_contents(CLA_PLUGIN_DIR . 'cache/articles-cache' . $id . '.json');
-    $response = [];
-    if ($cache === false) {
+    $cache = false;
 
+    $response = [];
+
+    if(file_exists(CLA_PLUGIN_DIR . 'cache/articles-cache' . $id . '.json') === false){
         $response = array(
             'id' => $id,
             'content' => json_decode("[]" , true),
@@ -93,6 +94,8 @@ function cla_fetch_shortcode_data($data) {
         return rest_ensure_response($response);
     }
 
+    $cache = file_get_contents(CLA_PLUGIN_DIR . 'cache/articles-cache' . $id . '.json');
+    
     $response = array(
         'id' => $id,
         'content' => json_decode($cache , true),

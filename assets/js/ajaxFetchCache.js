@@ -17,11 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
             let output= '';
 
             data.content.forEach(function (item) {
+
+                let date = item.post_date.split(":").slice(0, 2).join(":");
+
                 if(claViewType === 'list'){
-                    output += CLA_list_view(claId, item.post_title, item.permalink, item.post_date);
+                    output += CLA_list_view(claId, item.post_title, item.permalink, date);
                 }
                 else{
-                    output += CLA_Card_view(claId, item.post_title, item.post_excerpt, item.permalink, item.post_date, item.image_url);
+                    output += CLA_Card_view(claId, item.post_title, item.post_excerpt, item.permalink, date, item.image_url);
                 }
             });
 
