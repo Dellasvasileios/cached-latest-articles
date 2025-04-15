@@ -2,7 +2,8 @@
 class CLA_File_Handler{
     
 
-    function update_file($full_path , $content){   
+    function update_file($full_path , $content){  
+
         if(!is_string($full_path)){
             throw new Exception("Parameter is not a string as expected.");
         }
@@ -12,6 +13,7 @@ class CLA_File_Handler{
         }
         
         file_put_contents($full_path, json_encode($content));
+        
     }
 
     function delete_file($full_path){

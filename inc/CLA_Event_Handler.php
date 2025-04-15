@@ -55,6 +55,7 @@ class CLA_Event_Handler{
             }
             
         }
+
     }
 
     function onSceduledPostPublished($postID){
@@ -67,6 +68,7 @@ class CLA_Event_Handler{
                 $this->CLA_Cache_Handler->refresh_cache();
             }
         }
+
     }
 
     function ondeletePost($postID){
@@ -78,6 +80,7 @@ class CLA_Event_Handler{
             $this->CLA_Cache_Handler->refresh_cache();
 
         }
+        
     }
 
     function onTrashedPost($new_status, $old_status, $post){

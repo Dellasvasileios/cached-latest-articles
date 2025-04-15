@@ -8,8 +8,6 @@ class CLA_Cache_Handler{
 
     private $ID;
 
-    
-
     private $cache_dir;
 
     private $CLA_Posts;
@@ -39,6 +37,7 @@ class CLA_Cache_Handler{
         }else{
             $this->CLA_File_Manager->update_file($this->cache_dir .'articles-cache'.$this->ID.'.json', []);
         }
+        
     }
 
 }
