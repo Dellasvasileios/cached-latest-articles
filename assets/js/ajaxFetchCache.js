@@ -6,17 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
         let claId = shortcode.getAttribute('data-cla-id');
         let claViewType = shortcode.getAttribute('data-cla-view-type');
         
-        let fullpaath = cla_ajax_object.domain + 'wp-content/plugins/cached-latest-articles/cache/' + 'articles-cache'+ claId +'.json';
-        let API_shortcode = cla_ajax_object.domain + '/wp-json/cla/v1/shortcode/' + claId;
+        let cachedArticlesUrl = cla_ajax_object.domain + '/wp-content/plugins/cached-latest-articles/cache/' + 'articles-cache'+ claId +'.json';
 
-        fetch(API_shortcode)
+        fetch(cachedArticlesUrl)
         .then(response => response.json())
         .then(data => {
-            console.log('Shortcode data:', JSON.stringify(data.content));
-            
+           
             let output= '';
 
-            data.content.forEach(function (item) {
+            data.forEach(function (item) {
 
                 let date = item.post_date.split(":").slice(0, 2).join(":");
 

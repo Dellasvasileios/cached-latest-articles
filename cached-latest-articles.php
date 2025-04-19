@@ -69,38 +69,3 @@ function CLA_init_caching(){
 }
 
 add_action('init', 'CLA_init_caching');
-
-add_action('rest_api_init', function () {
-    register_rest_route('cla/v1', '/shortcode/(?P<id>\d+)', array(
-        'methods' => 'GET',
-        'callback' => 'cla_fetch_shortcode_data',
-        'permission_callback' => '__return_true', 
-    ));
-});
-
-function cla_fetch_shortcode_data($data) {
-    $id = $data['id'];
-
-    $cache = false;
-
-    $response = [];
-
-    if(file_exists(CLA_PLUGIN_DIR . 'cache/articles-cache' . $id . '.json') === false){
-        $response = array(
-            'id' => $id,
-            'content' => json_decode("[]" , true),
-        );
-
-        return rest_ensure_response($response);
-    }
-
-    $cache = file_get_contents(CLA_PLUGIN_DIR . 'cache/articles-cache' . $id . '.json');
-    
-    $response = array(
-        'id' => $id,
-        'content' => json_decode($cache , true),
-    );
-
-    return rest_ensure_response($response);
-
-}
