@@ -35,8 +35,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 shortcode.appendChild(ul);
             }
-
-            shortcode.innerHTML = output;
+            else{
+                let container = document.createElement('div');
+                container.innerHTML = output;
+                if (container.firstElementChild) {
+                    Array.from(container.children).forEach(child => {
+                        shortcode.appendChild(child);
+                    });
+                }
+                
+            }
 
             loadingIcon.classList.toggle('CLA_loading-icon__hide');
             

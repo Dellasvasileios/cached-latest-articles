@@ -1,3 +1,2 @@
-1.Add a loading icon for AJAX calls.
-2.Add a button for renewing the cache for each shortcode separately.
-3.Add activity diagram
+1.Add a button for renewing the cache for each shortcode separately.
+2.Add activity diagram
