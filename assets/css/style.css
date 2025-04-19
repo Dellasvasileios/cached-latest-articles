@@ -1,0 +1,8 @@
+.CLA_loading-icon{
+    width: 100px;
+    height: 100px;
+}
+
+.CLA_loading-icon__hide{
+    display: none;
+}

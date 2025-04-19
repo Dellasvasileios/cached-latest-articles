@@ -47,9 +47,14 @@ function shortcode_cached_latest_articles($atts){
         }
     }
     else{
+        ob_start();
+        ?>
         
-        $output = '<div data-cla-view-type='.$atts['view'].' data-ajax="true" data-CLA-id="'.$atts['id'].'" class="CLACardAjaxWrapper'.$atts['id'].'"></div>';
-        
+        <div data-cla-view-type="<?=$atts['view']?>" data-ajax="true" data-CLA-id="<?=$atts['id']?>" class="CLACardAjaxWrapper<?=$atts['id']?>">
+            <img class="CLA_loading-icon CLA_loading-icon__hide"  class="loading-icon-chashed-articles" src="<?= CLA_PLUGIN_URL . '/assets/images/loading_icon.gif'?>" alt="loading icon">
+        </div>
+        <?php
+        $output = ob_get_clean();
     }
 
     return $output;

@@ -5,13 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
     shortcodes.forEach(function (shortcode) {
         let claId = shortcode.getAttribute('data-cla-id');
         let claViewType = shortcode.getAttribute('data-cla-view-type');
+        let loadingIcon = shortcode.querySelector('img.CLA_loading-icon');
         
         let cachedArticlesUrl = cla_ajax_object.domain + '/wp-content/plugins/cached-latest-articles/cache/' + 'articles-cache'+ claId +'.json';
 
+        loadingIcon.classList.toggle('CLA_loading-icon__hide');
         fetch(cachedArticlesUrl)
         .then(response => response.json())
         .then(data => {
-           
+            
             let output= '';
 
             data.forEach(function (item) {
@@ -32,13 +34,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 ul.innerHTML = output;
 
                 shortcode.appendChild(ul);
-                return;
             }
 
             shortcode.innerHTML = output;
+
+            loadingIcon.classList.toggle('CLA_loading-icon__hide');
             
         })
-        .catch(error => console.error('Error fetching shortcode:', error));
+        .catch(error => {
+            loadingIcon.classList.toggle('CLA_loading-icon__hide');
+            console.error('Error fetching shortcode:', error)
+        });
          
     });
 

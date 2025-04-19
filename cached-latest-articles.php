@@ -11,6 +11,7 @@
 }
 
 define('CLA_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('CLA_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 require_once plugin_dir_path(__FILE__) . 'admin/options-page.php';
 require_once plugin_dir_path(__FILE__) . 'inc/CLA_Cache_Handler.php';
@@ -25,12 +26,17 @@ function CLA_enqueue_admin_scripts(){
         wp_enqueue_style("options-page-css", plugin_dir_url(__FILE__) . 'assets/css/admin/options-page.css', [], '1.0.0', 'all');
         wp_enqueue_script("options-page-js", plugin_dir_url(__FILE__) . 'assets/js/admin/options_page.js', [], '1.0.0', true);
     }
+
+    
 }
 
 add_action('admin_enqueue_scripts', 'CLA_enqueue_admin_scripts');
 
 
 function CLA_enqueue_front_end_scripts(){
+
+    wp_enqueue_style("CLA-main-style-css", plugin_dir_url(__FILE__) . 'assets/css/style.css', [], '1.0.0', 'all');
+
     wp_enqueue_script("cla-frontend-js", plugin_dir_url(__FILE__) . 'assets/js/ajaxFetchCache.js', [], '1.0.0', true);
 
     wp_localize_script('cla-frontend-js', 'cla_ajax_object', array(
