@@ -1,4 +1,10 @@
-# Cached Latest Articles
+# Cached Latest Articles (Currently In Progress)
+
+#installation
+
+If you download the project as a zip remove the -main part from the initial folder name structure (main is the branch name)
+
+#Features
 
 CachedLatestArticles – WordPress Plugin
 
@@ -10,7 +16,7 @@ Designed to minimize load times and reduce unnecessary database calls, this plug
 
 🔁 Custom JSON Cache: Avoids repeated database queries by caching latest articles in a JSON file.
 
-📰 Display Options: Choose between card or list view for article layout.
+📰 Display Options: Choose between card or list view for article layout. (There is no CSS applied for output)
 
 ⚙️ Shortcode Integration: Easily insert the latest articles.
 
