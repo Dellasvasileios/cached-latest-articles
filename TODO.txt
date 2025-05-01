@@ -1,2 +1,1 @@
 1.Add a button for renewing the cache for each shortcode separately.
-2.Add activity diagram
