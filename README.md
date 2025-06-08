@@ -1,4 +1,4 @@
-# Cached Latest Articles (In Progress)
+# Cached Latest Articles
 
 #installation
 
